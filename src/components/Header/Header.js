@@ -46,6 +46,7 @@ const Nav = styled.nav`
     display: flex;
     column-gap: 3rem;
     justify-content: center;
+    margin-left: 3rem;
 `;
 
 const NavLink = styled.a`
