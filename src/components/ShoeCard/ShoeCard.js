@@ -40,11 +40,17 @@ const ShoeCard = ({
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price variant={variant}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant === 'on-sale' && <SalePrice>{formatPrice(salePrice)}</SalePrice>}
         </Row>
+        {variant !== 'default' &&
+          <Flag variant={variant}>
+            {variant === 'on-sale' ? 'Sale' : 'Just Released!'}
+          </Flag>
+        }
       </Wrapper>
     </Link>
   );
@@ -56,7 +62,9 @@ const Link = styled.a`
   flex: 1 0 350px;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  position: relative;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
@@ -64,10 +72,15 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
     width: 100%;
+    border-radius: 16px 16px 4px 4px;
 `;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  row-gap: 0.375rem;
 `;
 
 const Name = styled.h3`
@@ -75,7 +88,12 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  color: ${props => props.variant === 'on-sale' ?
+          COLORS.gray[700] :
+          COLORS.gray[900]};
+  text-decoration: ${props => props.variant === 'on-sale' ? "line-through" : "initial"};
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
@@ -84,6 +102,23 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
+`;
+
+const Flag = styled.div`
+    align-items: center;
+    background-color: ${props => props.variant === 'on-sale' ? COLORS.primary : COLORS.secondary};
+    border-radius: 2px;
+    color: ${COLORS.white};
+    display: flex;
+    font-size: 0.875rem;
+    font-weight: ${WEIGHTS.medium};
+    height: 2rem;
+    justify-content: center;
+    padding: 0.625rem;
+    position: absolute;
+    right: -4px;
+    top: 12px;
+    width: fit-content;
 `;
 
 export default ShoeCard;
