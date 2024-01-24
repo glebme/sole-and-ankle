@@ -38,6 +38,7 @@ const MainHeader = styled.div`
   padding-top: 21px;
 `;
 
+//Introduced side that acted as white space and pushed stuff
 const Side = styled.div`
     flex: 1;
 `;
